@@ -20,7 +20,7 @@ function App() {
             <input className='job-end'/>
           </div>
           <div className='tender-date'>
-            <label>Tender start date</label>
+            <label>Tender start  date</label>
             <input className='tender-start'/>
             <label>Tender end date</label>
             <input className='tender-end'/>
