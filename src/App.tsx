@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <div className='main-containter'>
+      <div className='main-container'>
         <div className='left-container'>
           <label>Job description</label>
           <input className='job-desc'/>
