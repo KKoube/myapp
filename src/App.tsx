@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [name, setName] = useState('');
+
+  const [name2, setName2] = useState('')
+
+  useEffect(() => {
+    setTimeout(() => {
+      setName2(`"${name2}"`)
+    }, 2000);
+  }, [name])
   return (
     <div className="App">
       <div className='main-container'>
@@ -26,11 +35,11 @@ function App() {
             <input className='tender-end'/>
           </div>
           <label>Damand 1</label>
-          <input className='demand-1'/>
+          <input value={name} onChange={(e) => setName(e.target.value) } className='demand-1'/>
           <label>Demand 2</label>
-          <input className='demand-2'/>
+          <input value={name2} onChange={(e) => setName2(e.target.value)} className='demand-2'/>
           <label>Payment demands</label>
-          <input className='payment-demands'/>
+          <input value={name+name2} className='payment-demands'/>
           </div>
         <div className='right-container'>
           <label>Estimated price (once payment)</label>
