@@ -1,76 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import SwipeableViews from 'react-swipeable-views';
+import { useTheme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Page1 from "./Pages/Page1/Page1";
 
-function App() {
-  const [name, setName] = useState('');
+interface TabPanelProps {
+  children?: React.ReactNode;
+  dir?: string;
+  index: number;
+  value: number;
+}
 
-  const [name2, setName2] = useState('')
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setName2(`"${name2}"`)
-    }, 2000);
-  }, [name])
   return (
-    <div className="App">
-      <div className='main-container'>
-        <div className='left-container'>
-          <label>Job description</label>
-          <input className='job-desc'/>
-        </div>
-        <div className='center-container'>
-          <label>Tag chooser</label>
-          <input className='tag-chooser' />
-          <div className='job-date'>
-            <label>Job start date</label>
-            <input className='job-start'/>
-            <label>Job end date</label>
-            <input className='job-end'/>
-          </div>
-          <div className='tender-date'>
-            <label>Tender start  date</label>
-            <input className='tender-start'/>
-            <label>Tender end date</label>
-            <input className='tender-end'/>
-          </div>
-          <label>Damand 1</label>
-          <input value={name} onChange={(e) => setName(e.target.value) } className='demand-1'/>
-          <label>Demand 2</label>
-          <input value={name2} onChange={(e) => setName2(e.target.value)} className='demand-2'/>
-          <label>Payment demands</label>
-          <input value={name+name2} className='payment-demands'/>
-          </div>
-        <div className='right-container'>
-          <label>Estimated price (once payment)</label>
-          <input className='Estimated price'/>
-          <div className='payments-1'>
-              <label>Estimated price (reccurrent payment)</label>
-              <input className='estim-price'/>
-              <label>Reccurent term</label>
-              <input className='term'/>
-            </div>
-            <div className='payments-2'>
-            <label>Estimated price (reccurrent payment)</label>
-              <input className='estim-price'/>
-              <label>Reccurent term</label>
-              <input className='term'/>
-            </div>
-            <div className='payments-3'>
-            <label>Estimated price (reccurrent payment)</label>
-              <input className='estim-price'/>
-              <label>Reccurent term</label>
-              <input className='term'/>
-            </div>
-            <div className=' total'>
-              <label>Total price</label>
-              <input className='total-price'/>
-            </div>
-          
-        </div>
-        </div>
+      <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`full-width-tabpanel-${index}`}
+          aria-labelledby={`full-width-tab-${index}`}
+          {...other}
+      >
+        {value === index && (
+            <Box sx={{ p: 3 }}>
+              <Typography>{children}</Typography>
+            </Box>
+        )}
       </div>
   );
 }
 
-export default App;
+function a11yProps(index: number) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+}
+
+export default function FullWidthTabs() {
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index: number) => {
+    setValue(index);
+  };
+
+  return (
+      <Box sx={{ bgcolor: 'background.paper', width: "100%" }}>
+        <AppBar position="static">
+          <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="secondary"
+              textColor="inherit"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+          >
+            <Tab label="Item One" {...a11yProps(0)} />
+            <Tab label="Item Two" {...a11yProps(1)} />
+            <Tab label="Item Three" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <Page1 />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            Plase Page 2 here
+          </TabPanel>
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            Plase Page 3 here
+          </TabPanel>
+        </SwipeableViews>
+      </Box>
+  );
+}
