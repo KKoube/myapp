@@ -7,6 +7,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Page1 from "./Pages/Page1/Page1";
+import Page2 from "./Pages/Page2/Page2";
+import Page3 from "./Pages/Page3/Page3";
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -19,19 +22,19 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-      <div
-          role="tabpanel"
-          hidden={value !== index}
-          id={`full-width-tabpanel-${index}`}
-          aria-labelledby={`full-width-tab-${index}`}
-          {...other}
-      >
-        {value === index && (
-            <Box sx={{ p: 3 }}>
-              <Typography>{children}</Typography>
-            </Box>
-        )}
-      </div>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
   );
 }
 
@@ -55,36 +58,36 @@ export default function FullWidthTabs() {
   };
 
   return (
-      <Box sx={{ bgcolor: 'background.paper', width: "100%" }}>
-        <AppBar position="static">
-          <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor="secondary"
-              textColor="inherit"
-              variant="fullWidth"
-              aria-label="full width tabs example"
-          >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
+    <Box sx={{ bgcolor: 'background.paper', width: "100%" }}>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
         >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Page1 />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            Plase Page 2 here
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            Plase Page 3 here
-          </TabPanel>
-        </SwipeableViews>
-      </Box>
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          <Page1 />
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Page2 />
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          <Page3 />
+        </TabPanel>
+      </SwipeableViews>
+    </Box>
   );
 }
